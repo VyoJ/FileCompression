@@ -8,9 +8,7 @@ int *initData()
 {
     int *dictonary = malloc(sizeof(int) * 113);
     for (int i = 0; i < 113; i++)
-    {
         dictonary[i] = 0;
-    }
     return dictonary;
 }
 

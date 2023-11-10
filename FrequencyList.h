@@ -1,11 +1,12 @@
 void appendToList(LIST *list, char character, int frequency);
-LIST* initList(int* data);
+LIST *initList(int *data);
 void sortList(LIST *list);
 void removeHead(LIST *list);
 void appendNode(LIST *list, NODE *node);
 
-LIST* initList(int* data) {
-    LIST* list = malloc(sizeof(LIST));
+LIST *initList(int *data)
+{
+    LIST *list = malloc(sizeof(LIST));
     list->size = 0;
 
     for (int i = 0; i < 113; i++)
@@ -13,26 +14,31 @@ LIST* initList(int* data) {
     return list;
 }
 
-void appendToList(LIST *list, char character, int frequency) {
-    NODE* node = malloc(sizeof(NODE));
+void appendToList(LIST *list, char character, int frequency)
+{
+    NODE *node = malloc(sizeof(NODE));
 
-    if(character!='1') {
+    if (character != '1')
+    {
         node->left = NULL;
         node->right = NULL;
     }
 
-    if(frequency == 0)
+    if (frequency == 0)
         return;
 
     node->character = character;
     node->frequency = frequency;
 
-    if(list->size == 0){
+    if (list->size == 0)
+    {
         list->first = node;
         list->last = node;
         list->first->prev = NULL;
         list->last->next = NULL;
-    }else{
+    }
+    else
+    {
         list->last->next = node;
         node->prev = list->last;
         list->last = node;
@@ -41,7 +47,8 @@ void appendToList(LIST *list, char character, int frequency) {
     list->size++;
 }
 
-void sortList(LIST *list) {
+void sortList(LIST *list)
+{
     int swapped, i;
     NODE *ptr1;
     NODE *lptr = NULL;
@@ -76,27 +83,30 @@ void sortList(LIST *list) {
             ptr1 = ptr1->next;
         }
         lptr = ptr1;
-    }
-    while (swapped);
-
+    } while (swapped);
 }
 
-void removeHead(LIST *list) {
+void removeHead(LIST *list)
+{
     NODE *node = list->first;
     list->first = node->next;
     list->first->prev = NULL;
-    node->next=NULL;
-    node->prev=NULL;
+    node->next = NULL;
+    node->prev = NULL;
     list->size--;
 }
 
-void appendNode(LIST *list, NODE *node){
-    if(list->size == 0){
+void appendNode(LIST *list, NODE *node)
+{
+    if (list->size == 0)
+    {
         list->first = node;
         list->last = node;
         list->first->prev = NULL;
         list->last->next = NULL;
-    }else{
+    }
+    else
+    {
         list->last->next = node;
         node->prev = list->last;
         list->last = node;

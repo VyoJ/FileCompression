@@ -4,14 +4,14 @@
 NODE *sortedFrequencyToTree(LIST *list);
 void printTree(NODE *node);
 void printArray(int arr[], int n);
-void convertHuffCodes(NODE *top, int bitsArray[], int etage, DICTIONARY *dictionary, int print);
-void putInDictionary(int arr[], int etage, DICTIONARY *dictionary, char character);
+void convertHuffCodes(NODE *top, int bitsArray[], int level, DICTIONARY *dictionary, int print);
+void putInDictionary(int arr[], int level, DICTIONARY *dictionary, char character);
 
-void printHuffCodesV2(NODE *top, int arr[], int etage,DICTIONARY* dictionary);
-
-NODE *sortedFrequencyToTree(LIST *list) {
-    NODE* nodesOfList = list->first;
-    while (list->size > 1) {
+NODE *sortedFrequencyToTree(LIST *list)
+{
+    NODE *nodesOfList = list->first;
+    while (list->size > 1)
+    {
         NODE *node = malloc(sizeof(NODE));
         node->character = '1';
         node->frequency = nodesOfList->frequency + nodesOfList->next->frequency;
@@ -26,12 +26,14 @@ NODE *sortedFrequencyToTree(LIST *list) {
     return list->first;
 }
 
-void printTree(NODE *top){
+void printTree(NODE *top)
+{
     if (top == NULL)
         return;
     printTree(top->left);
 
-    if(top->character != '1') {
+    if (top->character != '1')
+    {
         if (top->character == '\n')
             printf("\\n : %d\n", top->frequency);
         else
@@ -40,39 +42,44 @@ void printTree(NODE *top){
     printTree(top->right);
 }
 
-void convertHuffCodes(NODE *top, int bitsArray[], int etage, DICTIONARY *dictionary, int print) {
+void convertHuffCodes(NODE *top, int bitsArray[], int level, DICTIONARY *dictionary, int print)
+{
     if (top == NULL)
         return;
 
-    bitsArray[etage] = 0;
-    convertHuffCodes(top->left, bitsArray, etage + 1, dictionary,print);
+    bitsArray[level] = 0;
+    convertHuffCodes(top->left, bitsArray, level + 1, dictionary, print);
 
-    if(top->character != '1') {
-        if(print) {
+    if (top->character != '1')
+    {
+        if (print)
+        {
             if (top->character == '\n')
                 printf("\\n   | ");
             else
                 printf("%c   | ", top->character);
-            printArray(bitsArray, etage );
+            printArray(bitsArray, level);
             printf("\n");
         }
-        putInDictionary(bitsArray, etage, dictionary, top->character);
+        putInDictionary(bitsArray, level, dictionary, top->character);
     }
-    bitsArray[etage] = 1;
-    convertHuffCodes(top->right, bitsArray, etage + 1, dictionary,print);
+    bitsArray[level] = 1;
+    convertHuffCodes(top->right, bitsArray, level + 1, dictionary, print);
 }
 
-void printArray(int arr[], int n) {
+void printArray(int arr[], int n)
+{
     int i;
     for (i = 0; i < n; ++i)
         printf("%d", arr[i]);
 }
 
-void putInDictionary(int arr[], int etage, DICTIONARY *dictionary, char character) {
-    int index = character-'\n';
-    dictionary[index].size = etage;
-    dictionary[index].bit = malloc(etage * sizeof(int));
+void putInDictionary(int arr[], int level, DICTIONARY *dictionary, char character)
+{
+    int index = character - '\n';
+    dictionary[index].size = level;
+    dictionary[index].bit = malloc(level * sizeof(int));
 
-    for (int i = 0; i < etage; ++i)
+    for (int i = 0; i < level; ++i)
         dictionary[index].bit[i] = arr[i];
 }
